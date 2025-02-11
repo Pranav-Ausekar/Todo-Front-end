@@ -55,7 +55,7 @@ const Todos = () => {
         }
 
         async function addTodo() {
-            const response = await fetcher("http://localhost:3000/api/todos", {
+            const response = await fetcher(`${import.meta.env.VITE_API_URL}/api/todos`, {
                 method: "POST",
                 body: { title },
             });
@@ -77,7 +77,7 @@ const Todos = () => {
         toast.success("Todo deleted!")
         await mutate(
             async () => {
-                const response = await fetcher(`http://localhost:3000/api/todos/${id}`, {
+                const response = await fetcher(`${import.meta.env.VITE_API_URL}/api/todos/${id}`, {
                     method: "DELETE",
                     credentials: "include",
                 });
@@ -97,7 +97,7 @@ const Todos = () => {
 
     async function handleComplete(id, isCompleted) {
         await mutate(async () => {
-            const response = await fetcher(`http://localhost:3000/api/todos/${id}`, {
+            const response = await fetcher(`${import.meta.env.VITE_API_URL}/api/todos/${id}`, {
                 method: 'PUT',
                 body: { isCompleted: !isCompleted }
             });
@@ -149,7 +149,7 @@ const Todos = () => {
                             data.map((todo, index) => (
                                 <div
                                     key={index}
-                                    className={`flex h-10 items-center w-full ${index === data.length - 1 ? "border-b-0" : "border - b - 2"}
+                                    className={`flex h-10 items-center w-full ${index === data.length - 1 ? "border-b-0" : "border-b-2"}
                                     ${todo.isCompleted ? "bg-gray-200" : ""}
                                     `}
                                 >
