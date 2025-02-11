@@ -20,11 +20,11 @@ const Login = () => {
     useEffect(() => {
         if (state.success) {
             setTimeout(() => {
-                navigate("/")
+                navigate("/todos")
             }, 2000);
         }
     },
-        [state.success])
+        [state.success, navigate])
 
     const handleChange = (event) => {
         setFormData({ ...formData, [event.target.name]: event.target.value })
