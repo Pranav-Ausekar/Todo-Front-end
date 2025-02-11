@@ -14,15 +14,32 @@ import EditTodo from './EditTodo';
 import Profile from './Profile';
 import { useNavigate } from 'react-router-dom';
 
-const fetcher = (url, options = {}) => {
-    return fetch(url, {
+// const fetcher = (url, options = {}) => {
+//     return fetch(url, {
+//         method: options.method || "GET",
+//         headers: { "Content-Type": "application/json" },
+//         credentials: 'include',
+//         mode: 'cors',
+//         body: options.body ? JSON.stringify(options.body) : undefined
+//     }).then((res) => res.json());
+// }
+
+const fetcher = async (url, options = {}) => {
+    const res = await fetch(url, {
         method: options.method || "GET",
         headers: { "Content-Type": "application/json" },
-        credentials: 'include',
-        mode: 'cors',
+        credentials: "include", // Required for cookies to work
+        mode: "cors",
         body: options.body ? JSON.stringify(options.body) : undefined
-    }).then((res) => res.json());
-}
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+    }
+
+    return data;
+};
 
 const Todos = () => {
     const navigate = useNavigate();
