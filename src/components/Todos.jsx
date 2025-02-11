@@ -36,8 +36,8 @@ const Todos = () => {
     // console.log(data);
 
     useEffect(() => {
-        if (error?.error === "Not Authenticated!") {
-            navigate("/register"); // Redirect to register page
+        if (error && error.message?.includes("Not Authenticated!")) {
+            navigate("/register");
         }
     }, [error, navigate]);
 
