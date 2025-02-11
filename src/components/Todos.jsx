@@ -23,7 +23,7 @@ const fetcher = (url, options = {}) => {
 }
 
 const Todos = () => {
-    const { data, error, mutate, isLoading } = useSWR("http://localhost:3000/api/todos/", fetcher);
+    const { data, error, mutate, isLoading } = useSWR(`${import.meta.env.VITE_API_URL}/api/todos/`, fetcher);
     if (error) {
         return <h1 className='text-2xl py-2 text-center'>Something went wrong!</h1>
     }
