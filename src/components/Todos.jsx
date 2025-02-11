@@ -11,6 +11,7 @@ import { Plus } from 'lucide-react';
 import { Trash, Pencil, Check } from "lucide-react";
 import EditTodo from './EditTodo';
 import Profile from './Profile';
+import { useNavigate } from 'react-router-dom';
 
 const fetcher = (url, options = {}) => {
     return fetch(url, {
@@ -23,14 +24,24 @@ const fetcher = (url, options = {}) => {
 }
 
 const Todos = () => {
+    const navigate = useNavigate();
     const { data, error, mutate, isLoading } = useSWR(`${import.meta.env.VITE_API_URL}/api/todos/`, fetcher);
-    if (error) {
-        return <h1 className='text-2xl py-2 text-center'>Something went wrong!</h1>
-    }
-    if (isLoading) {
-        return <h1 className='text-2xl py-2 text-center'>Loading...</h1>
-    }
-    console.log(data);
+    // if (error) {
+    //     return <h1 className='text-2xl py-2 text-center'>Something went wrong!</h1>
+    // }
+    // if (isLoading) {
+    //     return <h1 className='text-2xl py-2 text-center'>Loading...</h1>
+    // }
+    // console.log(data);
+
+    useEffect(() => {
+        if (error?.error === "Not Authenticated!") {
+            navigate("/register"); // Redirect to register page
+        }
+    }, [error, navigate]);
+
+    if (isLoading) return <h1 className='text-2xl py-2 text-center'>Loading...</h1>;
+    if (error) return <h1 className='text-2xl py-2 text-center'>Something went wrong!</h1>;
 
     function handleError(error) {
         toast.error(error);
